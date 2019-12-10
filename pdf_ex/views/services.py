@@ -98,9 +98,10 @@ def parse_mpesa_content(file):
 
 def filter(file, filter_string):
 	df = pd.read_excel(file)
-	df = df[df.DETAILS == filter_string]
+	#df = df[df.DETAILS == filter_string]
+	df = df.loc[df['DETAILS'].str.contains(filter_string, flags=re.I, regex=True)]
 
 	output_file = BytesIO()
-	df.to_excel(output_file)
+	df.to_excel(output_file, index=False)
 
 	return output_file

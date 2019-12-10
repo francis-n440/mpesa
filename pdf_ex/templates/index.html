@@ -1,25 +1,87 @@
+{% load static %}
 <!doctype html>
-<!DOCTYPE html>
-<html>
-<head>
-	<title>File Upload</title>
-</head>
-<body>
-	<p>Num pages: <strong>{{ num_pages }}</strong></p>
-	<p>Errors: <strong style="color: red">{{ error }}</strong></p>
-	<br>
-	<form action="" method="POST" enctype="multipart/form-data">
-		<input type="file" name="file"> <br><br>
-		{% csrf_token %}
-		<label for="filter">Filter</label>
-			<select name='filter' id="filter">
-				<option value="">--- choose ---</option>
-				<option value="Airtime Purchase">Airtime Purchase</option>
-				<option value="Fuliza">Fuliza</option>
-			</select>
-			<br><br>
-		<label>Password</label><input type="text" name="password">
-		<button type="submit">upload</button>
-	</form>
-</body>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'css/stack-interface.css' %}" rel="stylesheet" type="text/css" media="all">
+        <link href="{% static 'css/socicon.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'css/stack-interface.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'css/theme.css' %}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{% static 'css/custom.css' %}" rel="stylesheet" type="text/css" media="all" />
+       <link href="https://fonts.googleapis.com/css?family=Catamaran:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    </head>
+    <body data-smooth-scroll-offset="77">
+
+        <div class="main-container">
+            <section class="switchable">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-5">
+                            <div class="switchable__text">
+                                <h3 class="cstm-header-styl">Extract & organise data from PDF files</h3>
+                                
+                                <p class="lead"> An automated softaware that can be used to extract, sort and save data from pdf file in excel format. </p>
+
+                                <a href="#start-extract" class="cstm-btn-1">START EXTRACTING</a>
+
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-7 col-xs-12">
+                            <img src="{% static 'img/pdf-extract-header.png' %}">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="text-center" id="start-extract">
+                <div class="container">
+                    <div class="row">
+                         <center>
+                        <div class="col-sm-10 col-md-8">
+                            <div class="row">
+                                <form action="" method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        <p class="text-left">Errors: <strong style="color: red">{{ error }}</strong></p>
+                                        <p class="text-left steps-cstm-styl"><span class="cstm-step-clr">Step 01:</span> Select/import the Mpesa pdf from your device</p> 
+                                        <input class="brdr-styl"  type="file" name="file" class="form-control-file">
+                                    </div>
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        <p class="text-left steps-cstm-styl"><span class="cstm-step-clr">Step 02:</span> Choose a filter</p>
+                                            <select class="brdr-styl" name='filter' id="filter">
+                                                <option value="">-------- choose -------</option>
+                                                <option value="Airtime Purchase">Airtime Purchase</option>
+                                                <option value="Fuliza">Fuliza</option>
+                                                <option value="Customer Withdrawal">Customer Withdrawal</option>
+                                                <option value="till">Till</option>
+                                                <option value="Customer Transfer">Customer Transfer</option>
+                                            </select>
+                                    </div>
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        <p class="text-left steps-cstm-styl"><span class="cstm-step-clr">Step 03:</span> Enter password <i class="helper-txt-styl">(leave blank if pdf does not have password)</i></p>
+                                        <input class="brdr-styl" type="text" name="password" placeholder="Enter password">
+                                        <p style="margin-top: 20px; margin-bottom: -20px;" class="text-left">Num pages: <strong>{{ num_pages }}</strong></p>
+                                    
+                                    </div>
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                    <button type="submit" href="#start-extract" class="btn btn--primary type--uppercase cstm-btn-2">EXTRACT DATA</button> </div>
+                                </form>
+                            </div>
+                        </div>
+                        </center>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <script src="{% static 'js/jquery-3.1.1.min.js' %}"></script>
+        <script src="{% static 'js/parallax.js' %}"></script>
+        <script src="{% static 'js/smooth-scroll.min.js' %}"></script>
+        <script src="{% static 'js/scripts.js' %}"></script>
+
+    </body>
+
 </html>
