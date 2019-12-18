@@ -3,7 +3,7 @@ import logging
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .services import extract_from_pdf, parse_mpesa_content, filter
+from .services import extract_from_pdf, parse_mpesa_content, exec_analytics
 
 logger = logging.getLogger(__name__)
 
@@ -19,14 +19,14 @@ def upload(request):
 			error = 'Invalid password'
 		else:
 			content = parse_mpesa_content(content)
-			filter_str = request.POST.get('filter')
-			if filter_str:
-				content = filter(content, filter_str)
+			if content:
+				content2 = exec_analytics(content)
+
 			response = HttpResponse()
-			response['Content-Disposition'] = 'attachment; filename="extractfile.xlsx"'
+			response['Content-Disposition'] = 'attachment; filename="summary.xlsx"'
 			response['Content-Type'] = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 
-			response.write(content.getvalue())
+			response.write(content2.getvalue())
 			return response
 
 

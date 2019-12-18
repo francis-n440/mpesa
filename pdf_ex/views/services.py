@@ -64,7 +64,7 @@ def parse_mpesa_content(file):
 	sheet['B1'] = 'COMPLETION TIME'
 	sheet['C1'] = 'DETAILS'
 	sheet['D1'] = 'TRANSACTION STATUS'
-	sheet['E1'] = 'PAID IN(+)/WITHDRAWN(-)'
+	sheet['E1'] = 'TOTAL'
 	sheet['F1'] = 'BALANCE'
 
 	a1 = sheet['A1']
@@ -96,12 +96,11 @@ def parse_mpesa_content(file):
 	os.remove(filename)
 	return file
 
-def filter(file, filter_string):
-	df = pd.read_excel(file)
-	#df = df[df.DETAILS == filter_string]
-	df = df.loc[df['DETAILS'].str.contains(filter_string, flags=re.I, regex=True)]
+def exec_analytics(excel):
+    excel_df = pd.read_excel(excel)
+    excel_df.set_index('DETAILS', inplace=True)
+    excel_df['TOTAL'] = excel_df['TOTAL'].astype(str).str.replace('-', '').str.replace(',', '').astype(float)
+    df_excel = BytesIO()
+    excel_df.groupby('DETAILS').sum().sort_values('TOTAL', ascending=False).to_excel(df_excel)
 
-	output_file = BytesIO()
-	df.to_excel(output_file, index=False)
-
-	return output_file
+    return df_excel
